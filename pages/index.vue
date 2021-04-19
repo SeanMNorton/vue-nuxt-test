@@ -6,29 +6,30 @@
         vue-nuxt-test
       </h1>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+        <button @click="showCurrentPosition">
+          get position
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    async showCurrentPosition () {
+      try {
+        await this.$CapacitorGeolocation.getCurrentPosition()
+        // eslint-disable-next-line no-console
+          .then(result => console.log(result))
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('error')
+      }
+    }
+  }
+
+}
 </script>
 
 <style>
@@ -57,14 +58,6 @@ export default {}
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
 }
 
 .links {

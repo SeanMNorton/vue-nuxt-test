@@ -1,0 +1,16 @@
+{
+  "appId": "com.example.app",
+  "appName": "vue-nuxt-test",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "server": {
+    "iosScheme": "nuxtmobile"
+  },
+  "cordova": {}
+}
