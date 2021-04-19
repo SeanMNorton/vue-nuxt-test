@@ -1,30 +1,48 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        vue-nuxt-test
-      </h1>
-      <div class="links">
-        <button @click="showCurrentPosition">
-          get position
+    <h1 v-if="loadingMap">
+      Loading...
+    </h1>
+    <Card :is-portrait="true">
+      <template #image>
+        <Map :lat="lat" :long="long" />
+      </template>
+
+      <template #content>
+        <button @click="setCurrentPosition">
+          Get My Location
         </button>
-      </div>
-    </div>
+      </template>
+
+      <template #footer>
+        Footer
+      </template>
+    </Card>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      lat: undefined,
+      long: undefined,
+      loadingMap: false
+    }
+  },
   methods: {
-    async showCurrentPosition () {
+    async setCurrentPosition () {
       try {
+        this.loadingMap = true
         await this.$CapacitorGeolocation.getCurrentPosition()
-        // eslint-disable-next-line no-console
-          .then(result => console.log(result))
+          .then((result) => {
+            this.lat = result.coords.latitude.toString()
+            this.long = result.coords.longitude.toString()
+          })
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log('error')
+        alert('unable to find location, please try again later')
+      } finally {
+        this.loadingMap = false
       }
     }
   }
